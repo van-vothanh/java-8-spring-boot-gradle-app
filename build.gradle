@@ -1,39 +1,31 @@
-buildscript {
-    repositories {
-        maven {
-            url "https://repo1.maven.org/maven2/"
-        }
-    }
-    dependencies {
-        classpath group: 'org.springframework.boot', name: 'spring-boot-gradle-plugin', version: '1.1.6.RELEASE'
-    }
+plugins {
+    id 'java'
+    id 'idea'
+    id 'org.springframework.boot' version '2.7.18'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 }
 
-apply plugin: 'java'
-apply plugin: 'idea'
-apply plugin: 'spring-boot'
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
 
 jar {
-    baseName = 'java-8-spring-boot-gradle-app'
-    version = '0.1.0'
+    archiveBaseName = 'java-8-spring-boot-gradle-app'
+    archiveVersion = '0.1.0'
 }
 
 repositories {
-    maven {
-        url "https://repo1.maven.org/maven2/"
-    }
+    mavenCentral()
 }
 
 dependencies {
-    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '1.1.6.RELEASE') {
+    implementation('org.springframework.boot:spring-boot-starter-web') {
         exclude module: 'spring-boot-starter-tomcat'
     }
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-jetty', version: '1.1.6.RELEASE'
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '1.1.6.RELEASE'
+    implementation 'org.springframework.boot:spring-boot-starter-jetty'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
-    testCompile group: 'junit', name: 'junit', version: '4.11'
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.1'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
